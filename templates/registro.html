@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    
+    <!-- Agrega la etiqueta del favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    
+    <style>
+        body {
+            background-color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background-color: white;
+            padding: 40px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 300px;
+            margin: 0 auto;
+            margin-top: 100px;
+        }
+        h2 {
+            color: blue;
+        }
+        .form-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            color: blue;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-container {
+            padding: 10px; /* Agrega relleno a los lados */
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .form-group input[type="submit"] {
+            background-color: blue;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .form-group .login-link {
+            margin-top: 10px;
+            text-align: center;
+            vertical-align: middle; /* Alineación vertical */
+        }
+        .flash-messages {
+            list-style-type: none;
+            padding: 0;
+        }
+        .flash-success {
+            color: green;
+        }
+        .flash-danger {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Registro</h2>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul class="flash-messages">
+              {% for category, message in messages %}
+                <li class="flash-{{ category }}">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+        
+        <form method="POST" class="form-container" onsubmit="return validateForm();">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required pattern="[A-Za-z]+">
+                <small>Solo letras permitidas.</small>
+            </div>
+            <div class="form-group">
+                <label for="username">Usuario:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="correo">Correo:</label>
+                <input type="email" id="correo" name="correo" required>
+                <small>Formato de correo válido (ejemplo@dominio.com).</small>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirmar Contraseña:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+                <small>Las contraseñas deben coincidir.</small>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Registrarse">
+            </div>
+        </form>
+        
+        <div class="form-group login-link">
+            <a href="{{ url_for('login') }}">Volver a Iniciar Sesión</a>
+        </div>
+    </div>
+    
+    <script>
+        function validateForm() {
+            var password = document.getElementById("password").value;
+            var confirm_password = document.getElementById("confirm_password").value;
+            
+            if (password !== confirm_password) {
+                alert("Las contraseñas no coinciden.");
+                return false;
+            }
+            
+            return true;
+        }
+    </script>
+</body>
+</html>
