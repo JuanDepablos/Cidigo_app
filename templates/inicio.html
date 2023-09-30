@@ -41,7 +41,7 @@
 
         .nav-menu ul li a {
             text-decoration: none;
-            color: white;
+            color: blue;
             font-weight: bold;
         }
 
@@ -50,7 +50,7 @@
             background-color: white;
             padding: 20px;
             margin-top: 20px;
-            color: #333; /* Color de texto negro */
+            color: #333;    
         }
     </style>
 </head>
@@ -58,14 +58,15 @@
     <div class="container">
         <header class="header">
             <div class="user-info">
-                <span>Bienvenido, {{ username }}</span>
+                <span>Bienvenido, {{ nombre }}</span>
             </div>
         </header>
         <nav class="nav-menu">
             <ul>
                 <li><a href="#">Inicio</a></li>
-                <li><a href="#">Registros de Envíos</a></li>
-                <!-- Agrega más opciones de menú según sea necesario -->
+                <li><a href="{{ url_for('info') }}">Registros de Envíos</a></li>
+                <li><a href="{{ url_for('login') }}">salir</a></li>
+                
             </ul>
         </nav>
         <main class="content">

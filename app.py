@@ -102,6 +102,11 @@ def profile():
     
     flash('Inicia sesión para ver tu perfil', 'info')
     return redirect(url_for('login'))
+@app.route('/info', methods=['GET'])
+def info():
+    # Lógica para mostrar la información de envío
+    return render_template('info.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
