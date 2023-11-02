@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
-    
+    <title>Editar Perfil</title>
+
     <!-- Agrega la etiqueta del favicon -->
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
-    
-    {{ style | safe }}  <!-- Estilo común -->
 </head>
-<body class="registro">
+<body>
     <div class="container">
-        <h2>Registro</h2>
-        
+        <h2>Editar Perfil</h2>
+
+        <!-- Código para mostrar mensajes flash -->
         {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
             <ul class="flash-messages">
@@ -24,51 +23,50 @@
             </ul>
           {% endif %}
         {% endwith %}
-        
+
         <form method="POST" class="form-container" onsubmit="return validateForm();">
             <div class="form-group">
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required pattern="[A-Za-z]+">
+                <label for="nombre_usuario">Nombre de Usuario:</label>
+                <input type="text" id="nombre_usuario" name="nombre_usuario" required value="{{ usuario[2] }}">
                 <small>Solo letras permitidas.</small>
             </div>
-            <div class "form-group">
-                <label for="username">Usuario:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
+            
             <div class="form-group">
                 <label for="correo">Correo:</label>
-                <input type="email" id="correo" name="correo" required>
+                <input type="email" id="correo" name="correo" required value="{{ usuario[3] }}">
                 <small>Formato de correo válido (ejemplo@dominio.com).</small>
             </div>
+            
             <div class="form-group">
-                <label for="password">Contraseña:</label>
+                <label for="password">Nueva Contraseña:</label>
                 <input type="password" id="password" name="password" required>
             </div>
+            
             <div class="form-group">
                 <label for="confirm_password">Confirmar Contraseña:</label>
                 <input type="password" id="confirm_password" name="confirm_password" required>
-                <small>Las contraseñas deben coincidir.</small>
             </div>
+            
             <div class="form-group">
-                <input type="submit" value="Registrarse">
+                <input type="submit" value="Guardar Cambios">
             </div>
         </form>
-        
+
         <div class="form-group login-link">
-            <a href="{{ url_for('login') }}">Volver a Iniciar Sesión</a>
+            <a href="{{ url_for('profile') }}">Volver a Perfil</a>
         </div>
     </div>
-    
+
     <script>
         function validateForm() {
             var password = document.getElementById("password").value;
             var confirm_password = document.getElementById("confirm_password").value;
-            
+
             if (password !== confirm_password) {
-                alert("Las contraseñas no coinciden.");
+                alert("Las contraseñas no coinciden");
                 return false;
             }
-            
+
             return true;
         }
     </script>

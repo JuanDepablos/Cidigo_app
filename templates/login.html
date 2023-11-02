@@ -7,79 +7,10 @@
     
     <!-- Agrega la etiqueta del favicon -->
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
     
-    <style>
-        body {
-            background-color: white;
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            background-color: white;
-            padding: 40px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 300px;
-            margin: 0 auto;
-            margin-top: 100px;
-        }
-        h2 {
-            color: blue;
-        }
-        .form-group {
-            text-align: left;
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            color: blue;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            margin-bottom: 10px; /* Agregar margen inferior */
-        }
-        .form-group input[type="submit"] {
-            background-color: blue;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-        .form-group .register-link {
-            margin-top: 10px;
-            text-align: center;
-        }
-        /* Código para los mensajes flash */
-        .flash-messages {
-            list-style-type: none;
-            padding: 0;
-        }
-        .flash-message {
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 3px;
-        }
-        .flash-message.success {
-            background-color: #4CAF50;
-            color: white;
-        }
-        .flash-message.danger {
-            background-color: #f44336;
-            color: white;
-        }
-        .flash-message.info {
-            background-color: #2196F3;
-            color: white;
-        }
-    </style>
 </head>
-<body>
+<body class="login">
     <div class="container">
         <h2>Iniciar Sesión</h2>
         
@@ -113,4 +44,3 @@
     </div>
 </body>
 </html>
-

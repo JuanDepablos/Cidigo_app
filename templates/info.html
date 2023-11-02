@@ -1,121 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Registro de Envíos</title>
+    <title>Registros de Envíos</title>
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-    <style>
-        /* Estilos generales */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
 
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Estilos para el encabezado */
-        .header {
-            background-color: blue;
-            color: white;
-            padding: 10px;
-            text-align: right;
-        }
-
-        /* Estilos para el menú de navegación */
-        .nav-menu ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .nav-menu ul li {
-            display: inline;
-            margin-right: 20px;
-        }
-
-        .nav-menu ul li a {
-            text-decoration: none;
-            color: blue;
-            font-weight: bold;
-        }
-
-        /* Estilos para el contenido principal */
-        .content {
-            background-color: white;
-            padding: 20px;
-            margin-top: 20px;
-            color: #333;    
-        }
-
-        /* Estilos para la tabla de envíos */
-        .envios-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .envios-table th, .envios-table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        .envios-table th {
-            background-color: blue;
-            color: white;
-        }
-
-        .envios-table tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-    </style>
-</head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="nav-menu">
-                <ul>
-                    <li><a href="#">Inicio</a></li>
-                    <li><a href="#">Registro de Envíos</a></li>
-                    <li><a href="#">Otra Página</a></li>
-                </ul>
+        <header class="header">
+            <div class="user-info">
+                <span>Bienvenido, {{ nombre }}</span>
             </div>
-        </div>
-        <div class="content">
-            <h1>Registro de Envíos</h1>
-            <table class="envios-table">
+        </header>
+        <nav class="nav-menu">
+            <ul>
+
+                <a href="{{ url_for('profile') }}">Volver al  Inicio</a>
+                <li><a href="{{ url_for('info') }}">Registros de Envíos</a></li>
+                <li><a href="{{ url_for('login') }}">Salir</a></li>
+            </ul>
+        </nav>
+        <main class="content">
+            <h1>Registros de Envíos</h1>
+            <table>
                 <thead>
                     <tr>
-                        <th>Nombre de Transportista</th>
+                        <th>Transportista</th>
                         <th>Fecha de Envío</th>
-                        <th>Info de Envío</th>
+                        <th>Información de Envío</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Aquí puedes generar dinámicamente filas de la tabla con datos de la base de datos -->
+                    {% for envio in envios %}
                     <tr>
-                        <td>Transportista A</td>
-                        <td>2023-09-29</td>
-                        <td>Información detallada sobre el envío A</td>
+                        <td>{{ envio.transportista }}</td>
+                        <td>{{ envio.fecha_envio }}</td>
+                        <td>{{ envio.info_envio }}</td>
                     </tr>
-                    <tr>
-                        <td>Transportista B</td>
-                        <td>2023-09-30</td>
-                        <td>Información detallada sobre el envío B</td>
-                    </tr>
-                    <tr>
-                        <td>Transportista C</td>
-                        <td>2023-10-01</td>
-                        <td>Información detallada sobre el envío C</td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
-        </div>
+        </main>
     </div>
 </body>
 </html>
