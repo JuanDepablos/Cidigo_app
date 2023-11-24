@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 import mysql.connector
 
 app = Flask(__name__)
@@ -90,8 +90,56 @@ def profile():
 
 @app.route('/info')
 def info():
-    # Lógica para mostrar la información de envío
-    return render_template('info.html')
+    if 'user_id' in session:
+        user_id = session['user_id']
+
+        conn = connect_to_database()
+        if conn:
+            cursor = conn.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM registros_envios WHERE usuario_id = %s", (user_id,))
+            envios = cursor.fetchall()
+            cursor.close()
+            conn.close()
+
+            return render_template('info.html', envios=envios)
+    
+    flash('Inicia sesión para ver la información de envío', 'info')
+    return redirect(url_for('login'))
+
+
+@app.route('/check_unique_username')
+def check_unique_username():
+    username = request.args.get('username')
+    conn = connect_to_database()
+    
+    if conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) FROM usuarios WHERE username = %s", (username,))
+        count = cursor.fetchone()[0]
+        cursor.close()
+        conn.close()
+
+        return jsonify({'unique': count == 0})
+    else:
+        return jsonify({'unique': False})
+
+@app.route('/check_unique_email')
+def check_unique_email():
+    email = request.args.get('email')
+    conn = connect_to_database()
+    
+    if conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) FROM usuarios WHERE correo = %s", (email,))
+        count = cursor.fetchone()[0]
+        cursor.close()
+        conn.close()
+
+        return jsonify({'unique': count == 0})
+    else:
+        return jsonify({'unique': False})
+
+
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 def edit_profile():
@@ -110,8 +158,7 @@ def edit_profile():
                     new_correo = request.form['correo']
                     new_password = request.form['password']
 
-                    # Validar que el nuevo correo no esté en uso
-                    if new_correo != user[3]:  # Evita la validación si el usuario mantiene su correo actual
+                    if new_correo != user[3]:
                         cursor = conn.cursor(buffered=True)
                         cursor.execute("SELECT id FROM usuarios WHERE correo = %s", (new_correo,))
                         existing_user = cursor.fetchone()
@@ -150,6 +197,29 @@ def edit_profile():
 
     flash('Inicia sesión para acceder a esta página', 'info')
     return redirect(url_for('login'))
+
+@app.route('/registro_envio', methods=['POST', 'GET'])
+def registro_envio():
+    if request.method == 'POST':
+        if 'user_id' in session:
+            usuario_id = session['user_id']
+            fecha = request.form['fecha']
+            descripcion = request.form['descripcion']
+
+            conn = connect_to_database()
+            if conn:
+                cursor = conn.cursor()
+                cursor.execute("INSERT INTO registros_envios (usuario_id, fecha, descripcion) VALUES (%s, %s, %s)",
+                               (usuario_id, fecha, descripcion))
+                conn.commit()
+                cursor.close()
+                conn.close()
+
+                flash('Registro de envío exitoso', 'success')
+                return redirect(url_for('info'))
+
+    return render_template('registro_envio.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

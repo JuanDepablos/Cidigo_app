@@ -14,47 +14,48 @@ a {
 
 /* Estilos comunes para el contenedor principal */
 .container {
-    background-color: #fff;
+    background: #b3d0e8; /* Celeste más claro */
     margin: 20px auto;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 400px;
-    padding: 20px;
+    width: 100%;
+    max-width: 400px; /* Se ha reducido el ancho del contenedor */
+    padding: 30px;
 }
 
 /* Estilos para el encabezado h2 */
 h2 {
-    color: #0072c6;
+    color: #006db0; /* Azul más oscuro */
     text-align: center;
 }
 
 /* Estilos para los campos de entrada */
 .form-group {
-    margin: 10px 0;
+    margin: 15px 0;
     display: flex;
     flex-direction: column;
 }
 
 .form-group label {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
 .form-group input[type="text"],
 .form-group input[type="email"],
 .form-group input[type="password"] {
-    padding: 10px;
-    border: 1px solid #ccc;
+    padding: 12px;
+    border: 1px solid #95b9d8; /* Celeste más claro */
     border-radius: 5px;
-    margin: 5px 0;
+    margin: 8px 0;
+    width: calc(100% - 24px); /* Ajuste para centrar el contenido */
 }
 
 /* Estilos para los botones y enlaces */
 input[type="submit"], .register-link a {
-    background-color: #0072c6;
+    background-color: #006db0; /* Azul más oscuro */
     color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 24px;
     border-radius: 5px;
     cursor: pointer;
     text-decoration: none;
@@ -79,87 +80,74 @@ input[type="submit"], .register-link a {
     color: #F44336;
 }
 
-/* Estilos para la página "Iniciar Sesión" */
-body.login {
-    background: linear-gradient(to bottom, #03009b, #0286d3);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-/* Estilos para la página "Registro" */
-body.registro {
-    background: linear-gradient(to bottom, #f5f5f5, #d3d3d3);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-/* Estilos para la página "Inicio" y "Información" */
-body.inicio, body.info {
-    background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+/* Estilos para la página "Iniciar Sesión" y "Registro" */
+body.login, body.registro {
+    background: linear-gradient(to bottom, #b3d0e8, #7fa9d8); /* Celeste más claro */
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
     color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 /* Estilos para el encabezado de usuario */
 .user-info {
-    background: #0072c6;
+    background: #006db0; /* Azul más oscuro */
     color: #fff;
-    padding: 10px;
+    padding: 15px;
     text-align: center;
 }
-
-/* Estilos para la barra de navegación */
-.nav-menu ul {
-    list-style: none;
-    padding: 0;
+/* Estilos para la página "Registro de Envíos" */
+body.registro_envios {
+    background: linear-gradient(to bottom, #b3d0e8, #7fa9d8);
     margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    color: #333;
     display: flex;
     justify-content: center;
-    background: #0072c6;
+    align-items: center;
+    height: 100vh;
 }
 
-.nav-menu li {
-    margin: 0 20px;
-}
-
-.nav-menu a {
-    color: #fff;
-    text-decoration: none;
-}
-
-/* Estilos para el contenido principal */
-.main-content {
-    padding: 20px;
-    text-align: center;
-}
-
-/* Estilos para las tablas */
-table {
+/* Estilos específicos para el formulario de registro de envíos */
+.form-registro-envios {
+    background: #b3d0e8;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    border-collapse: collapse;
+    max-width: 400px;
+    padding: 30px;
 }
 
-table, th, td {
-    border: 1px solid #ddd;
+.form-registro-envios h2 {
+    color: #006db0;
 }
 
-th, td {
-    padding: 10px;
-    text-align: left;
+.form-registro-envios label {
+    color: #006db0;
 }
 
-/* Estilos para los botones de "Salir" */
-.btn-salir {
-    background: #F44336;
+.form-registro-envios input[type="text"],
+.form-registro-envios textarea {
+    padding: 12px;
+    border: 1px solid #95b9d8;
+    border-radius: 5px;
+    margin: 8px 0;
+    width: calc(100% - 24px);
+}
+
+.form-registro-envios input[type="submit"] {
+    background-color: #006db0;
     color: #fff;
-    padding: 10px 20px;
     border: none;
+    padding: 12px 24px;
     border-radius: 5px;
     cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    width: 100%;
 }

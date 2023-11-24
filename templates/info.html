@@ -7,43 +7,33 @@
     <title>Registros de Envíos</title>
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
-
-<body>
-    <div class="container">
-        <header class="header">
-            <div class="user-info">
-                <span>Bienvenido, {{ nombre }}</span>
-            </div>
-        </header>
-        <nav class="nav-menu">
-            <ul>
-
-                <a href="{{ url_for('profile') }}">Volver al  Inicio</a>
-                <li><a href="{{ url_for('info') }}">Registros de Envíos</a></li>
-                <li><a href="{{ url_for('login') }}">Salir</a></li>
-            </ul>
-        </nav>
-        <main class="content">
-            <h1>Registros de Envíos</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Transportista</th>
-                        <th>Fecha de Envío</th>
-                        <th>Información de Envío</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for envio in envios %}
-                    <tr>
-                        <td>{{ envio.transportista }}</td>
-                        <td>{{ envio.fecha_envio }}</td>
-                        <td>{{ envio.info_envio }}</td>
-                    </tr>
+    
+    <body>
+        <h1>Historial de Envíos</h1>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
                     {% endfor %}
-                </tbody>
-            </table>
-        </main>
-    </div>
-</body>
-</html>
+                </ul>
+            {% endif %}
+        {% endwith %}
+    
+        <table border="1">
+            <tr>
+                <th>Fecha</th>
+                <th>Descripción</th>
+            </tr>
+            {% for envio in envios %}
+                <tr>
+                    <td>{{ envio.fecha }}</td>
+                    <td>{{ envio.descripcion }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    
+        <a href="{{ url_for('registro_envio') }}">Registrar Nuevo Envío</a>
+    </body>
+    </html>
+    

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Inicio</title>
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesini.css') }}">
     {{ style | safe }}  
 </head>
 <body>
@@ -19,6 +19,7 @@
             <ul>
                 <li><a href="{{ url_for('info') }}">Registros de Envíos</a></li>
                 <li><a href="{{ url_for('edit_profile') }}">Editar Perfil</a></li>
+                <li><a href="{{ url_for('registro_envio') }}">Editar Perfil</a></li>
                 <li><a href="{{ url_for('login') }}">Salir</a></li>
             </ul>
         </nav>

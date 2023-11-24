@@ -5,16 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
     
-    <!-- Agrega la etiqueta del favicon -->
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
-    
 </head>
 <body class="login">
     <div class="container">
         <h2>Iniciar Sesión</h2>
-        
-        <!-- Código para mostrar mensajes flash -->
+
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 <ul class="flash-messages">
@@ -25,7 +22,7 @@
             {% endif %}
         {% endwith %}
         
-        <form method="POST">
+        <form method="POST" class="login-form">
             <div class="form-group">
                 <label for="username">Usuario:</label>
                 <input type="text" id="username" name="username" required>
@@ -38,8 +35,9 @@
                 <input type="submit" value="Iniciar Sesión">
             </div>
         </form>
+
         <div class="form-group register-link">
-            <a href="{{ url_for('registro') }}">Registrarse</a>
+            <p>¿No tienes una cuenta? <a href="{{ url_for('registro') }}">Regístrate</a></p>
         </div>
     </div>
 </body>

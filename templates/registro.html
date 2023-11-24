@@ -25,28 +25,33 @@
           {% endif %}
         {% endwith %}
         
+        <!-- Agrega este elemento al cuerpo del formulario -->
+        <div id="error-message" class="error-message"></div>
+        
         <form method="POST" class="form-container" onsubmit="return validateForm();">
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required pattern="[A-Za-z]+">
+                <input type="text" id="nombre" name="nombre" required pattern="[A-Za-z ]+">
                 <small>Solo letras permitidas.</small>
             </div>
-            <div class "form-group">
+            <div class="form-group">
                 <label for="username">Usuario:</label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username" name="username" required onchange="checkUniqueUsername()">
+                <small id="username-error"></small>
             </div>
             <div class="form-group">
                 <label for="correo">Correo:</label>
-                <input type="email" id="correo" name="correo" required>
-                <small>Formato de correo válido (ejemplo@dominio.com).</small>
+                <input type="email" id="correo" name="correo" required onchange="validateEmailFormat(); checkUniqueEmail()">
+                <small id="email-error"></small>
             </div>
             <div class="form-group">
                 <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" required onchange="validatePassword()">
+                <small>Al menos 8 caracteres con una letra mayúscula, una letra minúscula y un número.</small>
             </div>
             <div class="form-group">
                 <label for="confirm_password">Confirmar Contraseña:</label>
-                <input type="password" id="confirm_password" name="confirm_password" required>
+                <input type="password" id="confirm_password" name="confirm_password" required onchange="validatePassword()">
                 <small>Las contraseñas deben coincidir.</small>
             </div>
             <div class="form-group">
@@ -64,12 +69,83 @@
             var password = document.getElementById("password").value;
             var confirm_password = document.getElementById("confirm_password").value;
             
+            var errorMessage = document.getElementById("error-message");
+
             if (password !== confirm_password) {
-                alert("Las contraseñas no coinciden.");
+                errorMessage.textContent = "Las contraseñas no coinciden.";
                 return false;
             }
-            
+
+            // Agrega aquí más validaciones para la contraseña si es necesario
+
+            errorMessage.textContent = "";  // Limpia el mensaje de error si todo está bien
             return true;
+        }
+
+        async function checkUniqueUsername() {
+            const usernameInput = document.getElementById("username");
+            const usernameError = document.getElementById("username-error");
+
+            const response = await fetch(`{{ url_for('check_unique_username') }}?username=${usernameInput.value}`);
+            const data = await response.json();
+
+            if (!data.unique) {
+                usernameError.textContent = "Este nombre de usuario ya está en uso.";
+                usernameInput.setCustomValidity("Este nombre de usuario ya está en uso.");
+            } else {
+                usernameError.textContent = "";
+                usernameInput.setCustomValidity("");
+            }
+        }
+
+        async function checkUniqueEmail() {
+            const emailInput = document.getElementById("correo");
+            const emailError = document.getElementById("email-error");
+
+            const response = await fetch(`{{ url_for('check_unique_email') }}?email=${emailInput.value}`);
+            const data = await response.json();
+
+            if (!data.unique) {
+                emailError.textContent = "Este correo electrónico ya está en uso.";
+                emailInput.setCustomValidity("Este correo electrónico ya está en uso.");
+            } else {
+                emailError.textContent = "";
+                emailInput.setCustomValidity("");
+            }
+        }
+
+        function validateEmailFormat() {
+            var emailInput = document.getElementById("correo");
+            var emailError = document.getElementById("email-error");
+
+            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            if (!emailRegex.test(emailInput.value)) {
+                emailError.textContent = "Formato de correo no válido";
+                emailInput.setCustomValidity("Formato de correo no válido");
+            } else {
+                emailError.textContent = "";
+                emailInput.setCustomValidity("");
+            }
+        }
+
+        function validatePassword() {
+            var passwordInput = document.getElementById("password");
+            var confirm_passwordInput = document.getElementById("confirm_password");
+            var passwordError = document.getElementById("error-message");
+
+            var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+            if (!passwordRegex.test(passwordInput.value)) {
+                passwordError.textContent = "La contraseña debe tener al menos 8 caracteres con una letra mayúscula, una letra minúscula y un número.";
+                passwordInput.setCustomValidity("La contraseña debe tener al menos 8 caracteres con una letra mayúscula, una letra minúscula y un número.");
+            } else if (passwordInput.value !== confirm_passwordInput.value) {
+                passwordError.textContent = "Las contraseñas no coinciden.";
+                passwordInput.setCustomValidity("Las contraseñas no coinciden.");
+            } else {
+                passwordError.textContent = "";
+                passwordInput.setCustomValidity("");
+            }
         }
     </script>
 </body>
